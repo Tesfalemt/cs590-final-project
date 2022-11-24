@@ -22,15 +22,15 @@ public class ClientApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		//1-->Add customers
 
-		Address address1 = new Address("5st. 89Ave","Toronto","J8Y4B");
-		Address address2 = new Address("12st. 2Ave","Kitchener","N2M5E7");
-		Contact contact1 = new Contact("6104545678","milkias@gmail.com");
-		Contact contact2 = new Contact("8935456679","heri@gmail.com");
+		// create customers
+		Address address1 = new Address("1000 4th st","fairfield","52557");
+		Address address2 = new Address("eastcost st","springfield","5345");
+		Contact contact1 = new Contact("6428183454","john@gmail.com");
+		Contact contact2 = new Contact("8935456679","doe@gmail.com");
 
-		CustomerDto customerDTO1 = new CustomerDto(12345, "Milkias",address1, contact1);
-		CustomerDto customerDTO2 = new CustomerDto(12346, "Heri",address2, contact2);
+		CustomerDto customerDTO1 = new CustomerDto(34, "john",address1, contact1);
+		CustomerDto customerDTO2 = new CustomerDto(32, "Doe",address2, contact2);
 
 		restTemplate.postForLocation(apiGateway+"/customers", customerDTO1);
 		restTemplate.postForLocation(apiGateway+"/customers", customerDTO2);
@@ -42,15 +42,12 @@ public class ClientApplication implements CommandLineRunner {
 
 		//2-->Add two books to command service
 
-		Book book1=new Book("111","Software Architecture","professor Rene ");
-		Book book2=new Book("112","Software Engineering","professor Kalu ");
+		Book book1=new Book("A-1-5","core java","oracle ");
+		Book book2=new Book("A-1-4","Biography","Tesfalem");
 
 		restTemplate.postForLocation(apiGateway+"/bookcommand",book1);
 		restTemplate.postForLocation(apiGateway+"/bookcommand",book2);
 
-		// print books
-		System.out.println(restTemplate.getForObject(apiGateway+"/111",Book.class));
-		System.out.println(restTemplate.getForObject(apiGateway+"/112",Book.class));
 
 
 

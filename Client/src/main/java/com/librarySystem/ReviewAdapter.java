@@ -16,6 +16,6 @@ public class ReviewAdapter {
         for (Review review:reviews) {
            reviewDtoList.add(gerReviewDtoFromReviewDto(review));
         }
-        return reviewDtoList;/// to be done--------------------
+        return reviewDtoList;
     }
 }
