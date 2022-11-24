@@ -19,31 +19,30 @@ public class Receiver {
         System.out.println("Recieved .. "+ customerDto);
         List<Borrowing> borrowedCustomers=borrowingRepo.findCustomersByCustomerNumber(customerDto.getCustomerNumber());
         for (Borrowing borrowing:borrowedCustomers){
-            //borrowing.getCustomer().setCustomerNumber(customerDto.getCustomerNumber());
             borrowing.getCustomer().setName(customerDto.getName());
             borrowingRepo.save(borrowing);
         }
     }
-//    @KafkaListener(topics={"updateBook"})
-//   public void messageReceivedFromBook(@Payload String asString){
-//        BookDto bookDto = new BookDto();
-//        try{
-//            ObjectMapper objectMapper = new ObjectMapper();
-//              bookDto = objectMapper.readValue(asString, BookDto.class);
-//
-//        } catch (JsonMappingException e) {
-//            throw new RuntimeException(e);
-//        } catch (JsonProcessingException e) {
-//            throw new RuntimeException(e);
-//        }
-//
-//        List<Borrowing>borrowingList=borrowingRepo.findBorrowingForBooks(bookDto.getIsbn());
-//        for (Borrowing borrow:borrowingList) {
-//            borrow.getBook().setIsbn(bookDto.getIsbn());
-//            borrow.getBook().setTittle(bookDto.getTittle());
-//            borrowingRepo.save(borrow);
-//        }
+    @KafkaListener(topics={"updateBook"})
+   public void messageReceivedFromBook(@Payload String asString){
+        BookDto bookDto = new BookDto();
+        try{
+            ObjectMapper objectMapper = new ObjectMapper();
+              bookDto = objectMapper.readValue(asString, BookDto.class);
 
-//
-//    }
+        } catch (JsonMappingException e) {
+            throw new RuntimeException(e);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+
+        List<Borrowing>borrowingList=borrowingRepo.findBorrowingForBooks(bookDto.getIsbn());
+        for (Borrowing borrow:borrowingList) {
+            borrow.getBook().setIsbn(bookDto.getIsbn());
+            borrow.getBook().setTittle(bookDto.getTittle());
+            borrowingRepo.save(borrow);
+        }
+
+
+    }
 }
